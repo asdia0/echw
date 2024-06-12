@@ -145,8 +145,11 @@
 % U-Substitution
 \newcommand{\usub}[1]{\tag*{\colorbox{orange!20}{$\begin{aligned}#1\end{aligned}$}}}
 
+% Evaluation of Derivative
+\newcommand{\evalder}[2]{\left. #1 \right|_{#2}}
+
 % Evaluation of Integral
-\newcommand{\eval}[3]{\left[#1\right]_{#2}^{#3}}
+\newcommand{\evalint}[3]{\left[#1\right]_{#2}^{#3}}
 
 % Boldface Vectors
 \renewcommand{\vec}[1]{\mathbf{#1}}
@@ -223,6 +226,60 @@
 \newcommand{\of}[1]{{\left( #1 \right)}}
 
 % --- Operators ---
+
+% Sine
+\let\oldsin\sin
+\RenewDocumentCommand{\sin}{g}{%
+\IfNoValueTF{#1}{\oldsin}%
+{\,{\oldsin}{\bp{#1}}}}
+
+% Cosine
+\let\oldcos\cos
+\RenewDocumentCommand{\cos}{g}{%
+\IfNoValueTF{#1}{\oldcos}%
+{\,{\oldcos}{\bp{#1}}}}
+
+% Tangent
+\let\oldtan\tan
+\RenewDocumentCommand{\tan}{g}{%
+\IfNoValueTF{#1}{\oldtan}%
+{\,{\oldtan}{\bp{#1}}}}
+
+% Cosecant
+\let\oldcsc\csc
+\RenewDocumentCommand{\csc}{g}{%
+\IfNoValueTF{#1}{\oldcsc}%
+{\,{\oldcsc}{\bp{#1}}}}
+
+% Secant
+\let\oldsec\sec
+\RenewDocumentCommand{\sec}{g}{%
+\IfNoValueTF{#1}{\oldsec}%
+{\,{\oldsec}{\bp{#1}}}}
+
+% Cotangent
+\let\oldcot\cot
+\RenewDocumentCommand{\cot}{g}{%
+\IfNoValueTF{#1}{\oldcot}%
+{\,{\oldcot}{\of{#1}}}}
+
+% Arcsine
+\let\oldarcsin\arcsin
+\RenewDocumentCommand{\arcsin}{g}{%
+\IfNoValueTF{#1}{\oldarcsin}%
+{\,{\oldarcsin}{\bp{#1}}}}
+
+% Arccosine
+\let\oldarccos\arccos
+\RenewDocumentCommand{\arccos}{g}{%
+\IfNoValueTF{#1}{\oldarccos}%
+{\,{\oldarccos}{\bp{#1}}}}
+
+% Arctangent
+\let\oldarctan\arctan
+\RenewDocumentCommand{\arctan}{g}{%
+\IfNoValueTF{#1}{\oldarctan}%
+{\,{\oldarctan}{\bp{#1}}}}
 
 % Logarithm
 \let\oldln\ln
