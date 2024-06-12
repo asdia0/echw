@@ -1,6 +1,6 @@
 %=====================================================================
 % echw.cls
-% Based on the echw class.
+% Based on the jhwhw class.
 %=====================================================================
 
 %=====================================================================
@@ -87,11 +87,13 @@
 \usepackage{fbox}
 \usepackage{float}
 \usepackage{multirow}
+\usepackage{parskip}
 \usepackage{tabularx}
 \usepackage{systeme}
 \usepackage[most]{tcolorbox}
 \usepackage{varwidth}
 \usepackage{xcolor}
+\usepackage{xparse}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows, intersections, angles, quotes, calc, decorations.markings}
@@ -103,38 +105,6 @@
 %=====================================================================
 % Custom Definitions
 %=====================================================================
-
-% Absolute Value
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}
-
-% Norm
-\DeclarePairedDelimiter\norm{\lVert}{\rVert}
-
-\makeatletter
-\let\oldabs\abs
-\def\abs{\@ifstar{\oldabs}{\oldabs*}}
-\let\oldnorm\norm
-\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
-\makeatother
-
-% Ceiling
-\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
-
-% Floor
-\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-
-% Differential Sign
-\renewcommand{\d}[1]{\mathop{\mathrm{d}#1}}
-
-% First Derivative
-\newcommand*{\der}[2]{
-\dfrac{\mathrm{d} #1}{\mathrm{d} #2}
-}
-
-% Higher-Order Derivatives
-\newcommand*{\derm}[3]{
-\dfrac{\mathrm{d}^{#3} #1}{\mathrm{d} {#2}^{#3}}
-}
 
 % To n Significant Figures
 \newcommand*{\tosf}[1]{
@@ -169,20 +139,8 @@
 
 % Cases
 \newcommand*{\case}[2]{
-  \noindent\textbf{Case #1: #2}
+  \textbf{Case #1: #2}
 }
-
-% Real Part
-\renewcommand{\Re}[1]{\mathfrak{Re}\left\{#1\right\}}
-
-% Imaginary Part
-\renewcommand{\Im}[1]{\mathfrak{Im}\left\{#1\right\}}
-
-% 2D Coordinate
-\newcommand*{\coord}[2]{\left(#1, #2\right)}
-
-% 3D Coordinate
-\newcommand*{\coordiii}[3]{\left(#1, #2, #3\right)}
 
 % U-Substitution
 \newcommand{\usub}[1]{\tag*{\colorbox{orange!20}{$\begin{aligned}#1\end{aligned}$}}}
@@ -244,3 +202,222 @@
   },
   TwoMarks/.default={0.5},
 }
+
+%=====================================================================
+% Adapted from https://github.com/pmichaillat/latex-math/blob/main/math.sty
+%=====================================================================
+
+% --- Brackets ---
+
+\newcommand{\bc}[1]{\left\lbrace #1 \right\rbrace} 
+\newcommand{\bp}[1]{\left( #1 \right)} 
+\newcommand{\bs}[1]{\left[ #1 \right]} 
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\absx}[1]{\lvert #1 \rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\normx}[1]{\lVert #1 \rVert}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\floorx}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceilx}[1]{\lceil #1 \rceil}
+\newcommand{\of}[1]{{\left( #1 \right)}}
+
+% --- Operators ---
+
+% Logarithm
+\let\oldln\ln
+\RenewDocumentCommand{\ln}{g}{%
+\IfNoValueTF{#1}{\oldln}%
+{\,{\oldln}{\bp{#1}}}}
+
+% Exponential
+\let\oldexp\exp
+\RenewDocumentCommand{\exp}{g}{%
+\IfNoValueTF{#1}{\oldexp}%
+{\,{\oldexp}{\bp{#1}}}}
+
+% Indicator
+\NewDocumentCommand{\ind}{g}{%
+\IfNoValueTF{#1}{\operatorname{\mathbb{1}}}%
+{\,\mathbb{1}{\bp{#1}}}}
+
+% Trace
+\NewDocumentCommand{\tr}{g}{%
+\IfNoValueTF{#1}{\operatorname{tr}}%
+{\,{\operatorname{tr}}{\bp{#1}}}}
+
+% Variance
+\NewDocumentCommand{\var}{o g}{%
+\IfNoValueTF{#2}{\operatorname{var}\IfValueT{#1}{_{#1}}}%
+{\,{\operatorname{var}\IfValueT{#1}{_{#1}}}{\bp{#2}}}}
+
+% Covariance
+\NewDocumentCommand{\cov}{o g}{%
+\IfNoValueTF{#2}{\operatorname{cov}\IfValueT{#1}{_{#1}}}%
+{\,{\operatorname{cov}\IfValueT{#1}{_{#1}}}{\bp{#2}}}}
+
+% Correlation
+\NewDocumentCommand{\corr}{o g}{%
+\IfNoValueTF{#2}{\operatorname{corr}\IfValueT{#1}{_{#1}}}%
+{\,{\operatorname{corr}\IfValueT{#1}{_{#1}}}{\bp{#2}}}}
+
+% Standard deviation
+\NewDocumentCommand{\sd}{o g}{%
+\IfNoValueTF{#2}{\operatorname{sd}\IfValueT{#1}{_{#1}}}%
+{\,{\operatorname{sd}\IfValueT{#1}{_{#1}}}{\bp{#2}}}}
+
+% Standard error
+\NewDocumentCommand{\se}{o g}{%
+\IfNoValueTF{#2}{\operatorname{se}\IfValueT{#1}{_{#1}}}%
+{\,{\operatorname{se}\IfValueT{#1}{_{#1}}}{\bp{#2}}}}
+
+% Maximum
+\let\oldmax\max
+\RenewDocumentCommand{\max}{o g}{%
+\IfNoValueTF{#2}{\oldmax\IfValueT{#1}{_{#1}}}%
+{\,{\oldmax\IfValueT{#1}{_{#1}}}{\bc{#2}}}}
+
+% Supremum
+\let\oldsup\sup
+\RenewDocumentCommand{\sup}{o g}{%
+\IfNoValueTF{#2}{\oldsup\IfValueT{#1}{_{#1}}}%
+{\,{\oldsup\IfValueT{#1}{_{#1}}}{\bc{#2}}}}
+
+% Argmax
+\DeclareMathOperator*{\argmax}{argmax}
+
+% Minimum
+\let\oldmin\min
+\RenewDocumentCommand{\min}{o g}{%
+\IfNoValueTF{#2}{\oldmin\IfValueT{#1}{_{#1}}}%
+{\,{\oldmin\IfValueT{#1}{_{#1}}}{\bc{#2}}}}
+
+% Infimum
+\let\oldinf\inf
+\RenewDocumentCommand{\inf}{o g}{%
+\IfNoValueTF{#2}{\oldinf\IfValueT{#1}{_{#1}}}%
+{\,{\oldinf\IfValueT{#1}{_{#1}}}{\bc{#2}}}}
+
+% Expectation
+\NewDocumentCommand{\E}{o g}{%
+\IfNoValueTF{#2}{\operatorname{\mathbb{E}}\IfValueT{#1}{_{#1}}}%
+{\,{\operatorname{\mathbb{E}}\IfValueT{#1}{_{#1}}}{\bp{#2}}}}
+
+% Probability
+\RenewDocumentCommand{\P}{o g}{%
+\IfNoValueTF{#2}{\operatorname{\mathbb{P}}\IfValueT{#1}{_{#1}}}%
+{\,{\operatorname{\mathbb{P}}\IfValueT{#1}{_{#1}}}{\bp{#2}}}}
+
+% --- Derivatives ---
+
+% Differential sign
+\renewcommand{\d}[1]{\mathop{\mathrm{d}#1}}
+
+% Ordinary derivative in display
+\NewDocumentCommand{\der}{o g g}{%
+\dfrac{\mathrm{d}\IfValueT{#1}{^{#1}} #2}{\mathrm{d} #3\IfValueT{#1}{^{#1}}}}
+
+% Ordinary derivative in text
+\NewDocumentCommand{\derx}{o g g}{%
+\mathrm{d}\IfValueT{#1}{^{#1}} #2/\mathrm{d} #3\IfValueT{#1}{^{#1}}}
+
+% Partial derivative in display
+\NewDocumentCommand{\pder}{o g g g}{%
+\IfNoValueTF{#4}{\dfrac{\partial\IfValueT{#1}{^{#1}} #2}{\partial #3\IfValueT{#1}{^{#1}}}}%
+{\left.\dfrac{\partial\IfValueT{#1}{^{#1}} #2}{\partial #3\IfValueT{#1}{^{#1}}}\right\vert_{#4}}}
+
+% Partial derivative in text
+\NewDocumentCommand{\pderx}{o g g g}{%
+\IfNoValueTF{#4}{\partial\IfValueT{#1}{^{#1}} #2/\partial #3\IfValueT{#1}{^{#1}}}%
+{\left.\partial\IfValueT{#1}{^{#1}} #2/\partial #3\IfValueT{#1}{^{#1}}\right\vert_{#4}}}
+
+% --- Blackboard letters ---
+
+\def\R{\mathbb{R}}
+\def\N{\mathbb{N}}
+\def\Z{\mathbb{Z}}
+\def\Q{\mathbb{Q}}
+\def\C{\mathbb{C}}
+\def\I{\mathbb{I}}
+
+% --- Caligraphic letters ---
+
+\def\Ac{\mathcal{A}}
+\def\Bc{\mathcal{B}}
+\def\Cc{\mathcal{C}}
+\def\Dc{\mathcal{D}}
+\def\Ec{\mathcal{E}}
+\def\Fc{\mathcal{F}}
+\def\Gc{\mathcal{G}}
+\def\Hc{\mathcal{H}}
+\def\Ic{\mathcal{I}}
+\def\Jc{\mathcal{J}}
+\def\Kc{\mathcal{K}}
+\def\Lc{\mathcal{L}}
+\def\Mc{\mathcal{M}}
+\def\Nc{\mathcal{N}}
+\def\Oc{\mathcal{O}}
+\def\Pc{\mathcal{P}}
+\def\Qc{\mathcal{Q}}
+\def\Rc{\mathcal{R}}
+\def\Sc{\mathcal{S}}
+\def\Tc{\mathcal{T}}
+\def\Uc{\mathcal{U}}
+\def\Vc{\mathcal{V}}
+\def\Wc{\mathcal{W}}
+\def\Xc{\mathcal{X}}
+\def\Yc{\mathcal{Y}}
+\def\Zc{\mathcal{Z}}
+
+% --- Greek letters ---
+
+\def\a{\alpha}
+\def\b{\beta}
+\def\c{\chi}
+\def\de{\delta}
+\def\D{\Delta}
+\def\uD{\upDelta}
+\def\e{\epsilon}
+\def\ve{\varepsilon}
+\def\f{\phi}
+\def\vf{\varphi}
+\def\F{\Phi}
+\def\g{\gamma}
+\def\G{\Gamma}
+\def\h{\eta}
+\def\i{\iota}
+\def\k{\kappa}
+\def\vk{\varkappa}
+\def\l{\lambda}
+\def\L{\Lambda}
+\def\m{\mu}
+\def\n{\nu}
+\def\o{\omega}
+\def\O{\Omega}
+\def\p{\psi}
+\def\r{\rho}
+\def\vr{\varrho}
+\def\s{\sigma}
+\def\vs{\varsigma}
+\def\S{\Sigma}
+\def\t{\theta}
+\def\vt{\vartheta}
+\def\T{\Theta}
+\def\u{\upsilon}
+\def\U{\Upsilon}
+\def\x{\xi}
+\def\X{\Xi}
+\def\z{\zeta}
+
+% --- Accents ---
+
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\oa}[1]{\overrightarrow{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\wh}[1]{\widehat{#1}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+
+% --- Complex numbers ---
+
+\renewcommand{\Re}{\operatorname{Re}}
+\renewcommand{\Im}{\operatorname{Im}}
