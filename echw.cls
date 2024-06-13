@@ -88,8 +88,8 @@
 \usepackage{float}
 \usepackage{multirow}
 \usepackage{parskip}
-\usepackage{tabularx}
 \usepackage{systeme}
+\usepackage{tabularx}
 \usepackage[most]{tcolorbox}
 \usepackage{varwidth}
 \usepackage{xcolor}
@@ -108,22 +108,22 @@
 
 % To n Significant Figures
 \newcommand*{\tosf}[1]{
-\text{ (#1 s.f.)}
+\text{ ($#1$ s.f.)}
 }
 
 % To n Decimal Places
 \newcommand*{\todp}[1]{
-\text{ (#1 d.p.)}
-}
-
-% Newton-Raphson Method
-\newcommand*{\nrm}[2]{
-#1 - \dfrac{#2(#1)}{#2^\prime(#1)}
+\text{ ($#1$ d.p.)}
 }
 
 % Reject  
 \newcommand*{\reject}[1]{
 \qquad \text{(rej. \ensuremath{#1})}
+}
+
+% Newton-Raphson Method
+\newcommand*{\nrm}[2]{
+#1 - \dfrac{#2(#1)}{#2'(#1)}
 }
 
 % Inverse Function
@@ -154,14 +154,14 @@
 % Boldface Vectors
 \renewcommand{\vec}[1]{\mathbf{#1}}
 
+% Boldface Matrix
+\newcommand{\matr}[1]{\bm{#1}}
+
 % 2D Column Vectors
 \newcommand*{\cvecii}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
 
 % 3D Column Vectors
 \newcommand*{\cveciii}[3]{\begin{pmatrix} #1 \\ #2 \\ #3 \end{pmatrix}}
-
-% Boldface Matrix
-\newcommand{\matr}[1]{\bm{#1}}
 
 % Area Operator
 \DeclareMathOperator{\area}{Area}
@@ -229,61 +229,61 @@
 
 % Sine
 \let\oldsin\sin
-\RenewDocumentCommand{\sin}{g}{%
-\IfNoValueTF{#1}{\oldsin}%
-{\,{\oldsin}{\bp{#1}}}}
+\RenewDocumentCommand{\sin}{o g}{%
+\IfNoValueTF{#2}{\oldsin}%
+{\,{\oldsin\IfValueT{#1}{^{#1}}}{\bp{#2}}}}
 
 % Cosine
 \let\oldcos\cos
-\RenewDocumentCommand{\cos}{g}{%
-\IfNoValueTF{#1}{\oldcos}%
-{\,{\oldcos}{\bp{#1}}}}
+\RenewDocumentCommand{\cos}{o g}{%
+\IfNoValueTF{#2}{\oldcos}%
+{\,{\oldcos\IfValueT{#1}{^{#1}}}{\bp{#2}}}}
 
 % Tangent
 \let\oldtan\tan
-\RenewDocumentCommand{\tan}{g}{%
-\IfNoValueTF{#1}{\oldtan}%
-{\,{\oldtan}{\bp{#1}}}}
+\RenewDocumentCommand{\tan}{o g}{%
+\IfNoValueTF{#2}{\oldtan}%
+{\,{\oldtan\IfValueT{#1}{^{#1}}}{\bp{#2}}}}
 
 % Cosecant
 \let\oldcsc\csc
-\RenewDocumentCommand{\csc}{g}{%
-\IfNoValueTF{#1}{\oldcsc}%
-{\,{\oldcsc}{\bp{#1}}}}
+\RenewDocumentCommand{\csc}{o g}{%
+\IfNoValueTF{#2}{\oldcsc}%
+{\,{\oldcsc\IfValueT{#1}{^{#1}}}{\bp{#2}}}}
 
 % Secant
 \let\oldsec\sec
-\RenewDocumentCommand{\sec}{g}{%
-\IfNoValueTF{#1}{\oldsec}%
-{\,{\oldsec}{\bp{#1}}}}
+\RenewDocumentCommand{\sec}{o g}{%
+\IfNoValueTF{#2}{\oldsec}%
+{\,{\oldsec\IfValueT{#1}{^{#1}}}{\bp{#2}}}}
 
 % Cotangent
 \let\oldcot\cot
-\RenewDocumentCommand{\cot}{g}{%
-\IfNoValueTF{#1}{\oldcot}%
-{\,{\oldcot}{\of{#1}}}}
+\RenewDocumentCommand{\cot}{o g}{%
+\IfNoValueTF{#2}{\oldcot}%
+{\,{\oldcot\IfValueT{#1}{^{#1}}}{\of{#2}}}}
 
 % Arcsine
 \let\oldarcsin\arcsin
-\RenewDocumentCommand{\arcsin}{g}{%
-\IfNoValueTF{#1}{\oldarcsin}%
-{\,{\oldarcsin}{\bp{#1}}}}
+\RenewDocumentCommand{\arcsin}{o g}{%
+\IfNoValueTF{#2}{\oldarcsin}%
+{\,{\oldarcsin\IfValueT{#1}{^{#1}}}{\bp{#2}}}}
 
 % Arccosine
 \let\oldarccos\arccos
-\RenewDocumentCommand{\arccos}{g}{%
-\IfNoValueTF{#1}{\oldarccos}%
-{\,{\oldarccos}{\bp{#1}}}}
+\RenewDocumentCommand{\arccos}{o g}{%
+\IfNoValueTF{#2}{\oldarccos}%
+{\,{\oldarccos\IfValueT{#1}{^{#1}}}{\bp{#2}}}}
 
 % Arctangent
 \let\oldarctan\arctan
-\RenewDocumentCommand{\arctan}{g}{%
-\IfNoValueTF{#1}{\oldarctan}%
-{\,{\oldarctan}{\bp{#1}}}}
+\RenewDocumentCommand{\arctan}{o g}{%
+\IfNoValueTF{#2}{\oldarctan}%
+{\,{\oldarctan\IfValueT{#1}{^{#1}}}{\bp{#2}}}}
 
 % Logarithm
 \let\oldln\ln
-\RenewDocumentCommand{\ln}{g}{%
+\RenewDocumentCommand{\ln}{o g}{%
 \IfNoValueTF{#1}{\oldln}%
 {\,{\oldln}{\bp{#1}}}}
 
@@ -296,12 +296,18 @@
 % Indicator
 \NewDocumentCommand{\ind}{g}{%
 \IfNoValueTF{#1}{\operatorname{\mathbb{1}}}%
-{\,\mathbb{1}{\bp{#1}}}}
+{\,\mathbb{1}_{#1}}}
 
 % Trace
 \NewDocumentCommand{\tr}{g}{%
 \IfNoValueTF{#1}{\operatorname{tr}}%
 {\,{\operatorname{tr}}{\bp{#1}}}}
+
+% Determinant
+\let\olddet\det
+\RenewDocumentCommand{\det}{g}{%
+\IfNoValueTF{#1}{\olddet}%
+{\,{\olddet}{\bp{#1}}}}
 
 % Variance
 \NewDocumentCommand{\var}{o g}{%
@@ -355,6 +361,9 @@
 \IfNoValueTF{#2}{\oldinf\IfValueT{#1}{_{#1}}}%
 {\,{\oldinf\IfValueT{#1}{_{#1}}}{\bc{#2}}}}
 
+% Argmin
+\DeclareMathOperator*{\argmin}{argmin}
+
 % Expectation
 \NewDocumentCommand{\E}{o g}{%
 \IfNoValueTF{#2}{\operatorname{\mathbb{E}}\IfValueT{#1}{_{#1}}}%
@@ -367,7 +376,7 @@
 
 % --- Derivatives ---
 
-% Differential sign
+% Differential
 \renewcommand{\d}[1]{\mathop{\mathrm{d}#1}}
 
 % Ordinary derivative in display
@@ -395,7 +404,6 @@
 \def\Z{\mathbb{Z}}
 \def\Q{\mathbb{Q}}
 \def\C{\mathbb{C}}
-\def\I{\mathbb{I}}
 
 % --- Caligraphic letters ---
 
@@ -433,7 +441,6 @@
 \def\c{\chi}
 \def\de{\delta}
 \def\D{\Delta}
-\def\uD{\upDelta}
 \def\e{\epsilon}
 \def\ve{\varepsilon}
 \def\f{\phi}
