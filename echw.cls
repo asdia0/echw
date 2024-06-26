@@ -163,6 +163,15 @@
 % 3D Column Vectors
 \newcommand*{\cveciii}[3]{\begin{pmatrix} #1 \\ #2 \\ #3 \end{pmatrix}}
 
+% Dot Product
+\def\dotp{\cdot}
+
+% Cross Product
+\def\crossp{\times}
+
+% Degree Symbol
+\renewcommand{\deg}{^{\circ}}
+
 % Area Operator
 \DeclareMathOperator{\area}{Area}
 
