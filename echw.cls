@@ -178,6 +178,9 @@
 % Volume Operator
 \DeclareMathOperator{\volume}{Volume}
 
+% Dash
+\newcommand*{\dash}{\begin{center}\vspace{1ex}\rule[1ex]{7em}{0.5pt}\end{center}}
+
 % Custom Colours
 \colorlet{plotRed}{red!50}
 \colorlet{plotBlue}{blue!50}
@@ -292,7 +295,7 @@
 
 % Logarithm
 \let\oldln\ln
-\RenewDocumentCommand{\ln}{o g}{%
+\RenewDocumentCommand{\ln}{g}{%
 \IfNoValueTF{#1}{\oldln}%
 {\,{\oldln}{\bp{#1}}}}
 
