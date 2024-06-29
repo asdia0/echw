@@ -178,6 +178,9 @@
 % Volume Operator
 \DeclareMathOperator{\volume}{Volume}
 
+% Length Operator
+\DeclareMathOperator{\length}{Length}
+
 % Dash
 \newcommand*{\dash}{\begin{center}\vspace{1ex}\rule[1ex]{7em}{0.5pt}\end{center}}
 
