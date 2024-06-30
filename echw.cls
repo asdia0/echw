@@ -61,7 +61,7 @@
 \renewcommand*{\part}{\stepcounter{PartNum}
   \subsubsection*{Part (\thePartNum)}}
   
-\newcommand*{\subpart}{\stepcounter{SubPartNum}\medskip\noindent\textbf{Subpart (\theSubPartNum)}\newline\indent}
+\newcommand*{\subpart}{\stepcounter{SubPartNum}\medskip\noindent\textbf{Subpart (\theSubPartNum)}}
 
 \renewcommand{\theenumi}{(\alph{enumi})}
 \renewcommand{\labelenumi}{\theenumi}
