@@ -184,6 +184,10 @@
 % Dash
 \newcommand*{\dash}{\begin{center}\vspace{1ex}\rule[1ex]{7em}{0.5pt}\end{center}}
 
+% Complex Conjugate
+\def\cconj{^\ast}
+
+
 % Custom Colours
 \colorlet{plotRed}{red!50}
 \colorlet{plotBlue}{blue!50}
